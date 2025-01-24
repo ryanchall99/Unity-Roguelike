@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -6,22 +7,27 @@ public class BoardManager : MonoBehaviour
     public class CellData
     {
         public bool passable;
+        public GameObject ContainedObject;
     }
 
     [SerializeField] int boardWidth;
     [SerializeField] int boardHeight;
     [SerializeField] Tile[] groundTiles;
     [SerializeField] Tile[] wallTiles;
+    [SerializeField] GameObject foodPrefab;
     [SerializeField] PlayerController player;
 
     private Tilemap m_Tilemap;
     private Grid m_Grid;
     private CellData[,] m_BoardData;
+    private List<Vector2Int> m_EmptyCellsList;
 
     public void Init()
     {
         m_Tilemap = GetComponentInChildren<Tilemap>();
         m_Grid = GetComponentInChildren<Grid>();
+        // Initialize the list
+        m_EmptyCellsList = new List<Vector2Int>();
         m_BoardData = new CellData[boardWidth, boardHeight]; // Initializing with correct array size for all each cell data to be stored
 
         for (int y = 0; y < boardHeight; y++)
@@ -40,10 +46,33 @@ public class BoardManager : MonoBehaviour
                 {
                     tile = groundTiles[Random.Range(0, groundTiles.Length)];
                     m_BoardData[x, y].passable = true;
+
+                    // Passable cell so add to list
+                    m_EmptyCellsList.Add(new Vector2Int(x, y));
                 }
 
                 m_Tilemap.SetTile(new Vector3Int(x, y, 0), tile);
             }
+        }
+        // Removing player space from list
+        m_EmptyCellsList.Remove(new Vector2Int(1, 1));
+        GenerateFood();
+    }
+
+    private void GenerateFood()
+    {
+        int foodCount = 5;
+        for (int i = 0; i < foodCount; i++)
+        {
+            // Choosing random index from empty cell list
+            int randomIndex = Random.Range(0, m_EmptyCellsList.Count);
+            Vector2Int coord = m_EmptyCellsList[randomIndex]; // Storing coord of cell chosen
+
+            m_EmptyCellsList.RemoveAt(randomIndex); // Removing chosen coordinate from list (Prevents being chosen again)
+            CellData data = m_BoardData[coord.x, coord.y]; // Getting data from chosen cell coordinate
+            GameObject newFood = Instantiate(foodPrefab); // Instantiate food prefab
+            newFood.transform.position = CellToWorld(coord); // Setting position of food prefab (Converting from cell to world space)
+            data.ContainedObject = newFood; // Updating the cells contained object data
         }
     }
 
