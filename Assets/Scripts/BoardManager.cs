@@ -14,7 +14,8 @@ public class BoardManager : MonoBehaviour
     [SerializeField] int boardHeight;
     [SerializeField] Tile[] groundTiles;
     [SerializeField] Tile[] wallTiles;
-    [SerializeField] GameObject foodPrefab;
+    [SerializeField] GameObject[] foodPrefabArray;
+    [SerializeField] int minFood, maxFood;
     [SerializeField] PlayerController player;
 
     private Tilemap m_Tilemap;
@@ -61,7 +62,7 @@ public class BoardManager : MonoBehaviour
 
     private void GenerateFood()
     {
-        int foodCount = 5;
+        int foodCount = Random.Range(minFood, maxFood);
         for (int i = 0; i < foodCount; i++)
         {
             // Choosing random index from empty cell list
@@ -70,7 +71,7 @@ public class BoardManager : MonoBehaviour
 
             m_EmptyCellsList.RemoveAt(randomIndex); // Removing chosen coordinate from list (Prevents being chosen again)
             CellData data = m_BoardData[coord.x, coord.y]; // Getting data from chosen cell coordinate
-            GameObject newFood = Instantiate(foodPrefab); // Instantiate food prefab
+            GameObject newFood = Instantiate(foodPrefabArray[Random.Range(0, foodPrefabArray.Length)]); // Instantiate food prefab
             newFood.transform.position = CellToWorld(coord); // Setting position of food prefab (Converting from cell to world space)
             data.ContainedObject = newFood; // Updating the cells contained object data
         }
