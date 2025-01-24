@@ -49,6 +49,17 @@ public class BoardManager : MonoBehaviour
         player.Spawn(this, new Vector2Int(1, 1)); // Bottom left of board
     }
 
+    public CellData GetCellData(Vector2Int cellIndex)
+    {
+        if (cellIndex.x < 0 || cellIndex.x >= boardWidth || cellIndex.y < 0 || cellIndex.y > boardHeight)
+        {
+            // Stops searches of cells which don't exist
+            return null;
+        }
+
+        return m_BoardData[cellIndex.x, cellIndex.y];
+    }
+
     public Vector3 CellToWorld(Vector2Int cellIndex)
     {
         return m_Grid.GetCellCenterWorld((Vector3Int)cellIndex);
