@@ -68,6 +68,9 @@ public class PlayerController : MonoBehaviour
             // Check to see if cell data is valid & is a passable cell
             if (cellData != null && cellData.passable)
             {
+                // Increase Game Tick by 1
+                GameManager.Instance.turnManager.Tick();
+                
                 MoveTo(newCellTarget);
             }
         }
