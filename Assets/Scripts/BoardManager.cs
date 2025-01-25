@@ -122,6 +122,27 @@ public class BoardManager : MonoBehaviour
         return m_Grid.GetCellCenterWorld((Vector3Int)cellIndex);
     }
 
+    public void ClearBoard()
+    {
+        if (m_BoardData == null) return;
+
+        for (int y = 0; y < boardHeight; y++)
+        {
+            for (int x = 0; x > boardWidth; x++)
+            {
+                CellData cellData = m_BoardData[x, y];
+
+                if (cellData.ContainedObject != null)
+                {
+                    // Deleting Whole GameObject, as just deleting the cellData.ContainedObject, will only destroy the CellObject COMPONENT only.
+                    Destroy(cellData.ContainedObject.gameObject);
+                }
+                // null removes the cell tile and leaves it empty.
+                SetCellTile(new Vector2Int(x, y), null);
+            }
+        }
+    }
+
     // SETTER - Sets a specific tile
     public void SetCellTile(Vector2Int cellIndex, Tile tile)
     {

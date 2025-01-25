@@ -13,6 +13,6 @@ public class ExitCellObject : CellObject
 
     public override void PlayerEntered()
     {
-        Debug.Log("Exit Reached!");
+        GameManager.Instance.NewLevel();
     }
 }
