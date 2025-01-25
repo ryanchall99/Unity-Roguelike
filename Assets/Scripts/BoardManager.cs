@@ -72,13 +72,8 @@ public class BoardManager : MonoBehaviour
             Vector2Int coord = m_EmptyCellsList[randomIndex];
 
             m_EmptyCellsList.RemoveAt(randomIndex);
-            CellData data = m_BoardData[coord.x, coord.y];
             WallObject newWall = Instantiate(wallPrefab);
-
-            newWall.Init(coord);
-
-            newWall.transform.position = CellToWorld(coord);
-            data.ContainedObject = newWall;
+            AddObject(newWall, coord);
         }
     }
 
@@ -92,11 +87,17 @@ public class BoardManager : MonoBehaviour
             Vector2Int coord = m_EmptyCellsList[randomIndex]; // Storing coord of cell chosen
 
             m_EmptyCellsList.RemoveAt(randomIndex); // Removing chosen coordinate from list (Prevents being chosen again)
-            CellData data = m_BoardData[coord.x, coord.y]; // Getting data from chosen cell coordinate
             FoodObject newFood = Instantiate(foodPrefabArray[Random.Range(0, foodPrefabArray.Length)]); // Instantiate food prefab
-            newFood.transform.position = CellToWorld(coord); // Setting position of food prefab (Converting from cell to world space)
-            data.ContainedObject = newFood; // Updating the cells contained object data
+            AddObject(newFood, coord);
         }
+    }
+
+    private void AddObject(CellObject obj, Vector2Int coord)
+    {
+        CellData data = m_BoardData[coord.x, coord.y]; // Getting data from chosen cell coordinate
+        obj.transform.position = CellToWorld(coord); // Setting position of object (Converting from cell to world space)
+        data.ContainedObject = obj; // Updating the cells contained object data
+        obj.Init(coord); // Calling base Init function
     }
 
     public CellData GetCellData(Vector2Int cellIndex)
