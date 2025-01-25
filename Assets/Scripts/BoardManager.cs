@@ -16,6 +16,7 @@ public class BoardManager : MonoBehaviour
     [SerializeField] Tile[] wallTiles;
     [SerializeField] FoodObject[] foodPrefabArray;
     [SerializeField] WallObject[] wallPrefabArray;
+    [SerializeField] ExitCellObject exitPrefab;
     [SerializeField] int minFood, maxFood;
     [SerializeField] int minWalls, maxWalls;
     [SerializeField] PlayerController player;
@@ -59,6 +60,11 @@ public class BoardManager : MonoBehaviour
         }
         // Removing player space from list
         m_EmptyCellsList.Remove(new Vector2Int(1, 1));
+
+        Vector2Int endCoord = new Vector2Int(boardWidth - 2, boardHeight - 2);
+        AddObject(Instantiate(exitPrefab), endCoord);
+        m_EmptyCellsList.Remove(endCoord);
+
         GenerateWalls();
         GenerateFood();
     }
