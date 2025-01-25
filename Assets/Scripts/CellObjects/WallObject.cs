@@ -11,4 +11,9 @@ public class WallObject : CellObject
 
         GameManager.Instance.boardManager.SetCellTile(cell, ObstacleTilesArray[Random.Range(0, ObstacleTilesArray.Length)]);
     }
+
+    public override bool PlayerWantsToEnter()
+    {
+        return false;
+    }
 }

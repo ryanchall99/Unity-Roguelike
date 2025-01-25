@@ -71,10 +71,13 @@ public class PlayerController : MonoBehaviour
                 // Increase Game Tick by 1
                 GameManager.Instance.turnManager.Tick();
                 
-                MoveTo(newCellTarget);
-
-                if (cellData.ContainedObject != null)
+                if (cellData.ContainedObject == null)
                 {
+                    MoveTo(newCellTarget);    
+                }
+                else if (cellData.ContainedObject.PlayerWantsToEnter())
+                {
+                    MoveTo(newCellTarget);
                     cellData.ContainedObject.PlayerEntered();
                 }
             }
