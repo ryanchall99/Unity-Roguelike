@@ -6,7 +6,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [Header("Board & Player")]
-    [SerializeField] BoardManager boardManager;
     [SerializeField] PlayerController player;
 
     [Header("UI")]
@@ -16,6 +15,7 @@ public class GameManager : MonoBehaviour
     private Label m_FoodLabel;
 
     public TurnManager turnManager { get; private set; }
+    public BoardManager boardManager;
 
     private void Awake() 
     {

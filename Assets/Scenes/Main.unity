@@ -148,9 +148,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee109b6bdc6e8114ba985845addee276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boardManager: {fileID: 1972904733}
   player: {fileID: 1415157337}
   UIDoc: {fileID: 202432293}
+  boardManager: {fileID: 1972904733}
 --- !u!4 &194353972
 Transform:
   m_ObjectHideFlags: 0
@@ -652,8 +652,11 @@ MonoBehaviour:
   foodPrefabArray:
   - {fileID: 4120196204741307048, guid: e899312b6d99f514e89b98996cf7cdbf, type: 3}
   - {fileID: 3477807011732607146, guid: e12d6bda46eff724aa835939d19a2037, type: 3}
+  wallPrefab: {fileID: 6092341974734017725, guid: 52ae4c181803d0f4a831a4a9d503b222, type: 3}
   minFood: 1
   maxFood: 5
+  minWalls: 2
+  maxWalls: 5
   player: {fileID: 1415157337}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

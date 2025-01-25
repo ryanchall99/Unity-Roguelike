@@ -15,7 +15,9 @@ public class BoardManager : MonoBehaviour
     [SerializeField] Tile[] groundTiles;
     [SerializeField] Tile[] wallTiles;
     [SerializeField] FoodObject[] foodPrefabArray;
+    [SerializeField] WallObject wallPrefab;
     [SerializeField] int minFood, maxFood;
+    [SerializeField] int minWalls, maxWalls;
     [SerializeField] PlayerController player;
 
     private Tilemap m_Tilemap;
@@ -57,7 +59,27 @@ public class BoardManager : MonoBehaviour
         }
         // Removing player space from list
         m_EmptyCellsList.Remove(new Vector2Int(1, 1));
+        GenerateWalls();
         GenerateFood();
+    }
+
+    private void GenerateWalls()
+    {
+        int wallCount = Random.Range(minWalls, maxWalls);
+        for (int i = 0; i < wallCount; i++)
+        {
+            int randomIndex = Random.Range(0, m_EmptyCellsList.Count);
+            Vector2Int coord = m_EmptyCellsList[randomIndex];
+
+            m_EmptyCellsList.RemoveAt(randomIndex);
+            CellData data = m_BoardData[coord.x, coord.y];
+            WallObject newWall = Instantiate(wallPrefab);
+
+            newWall.Init(coord);
+
+            newWall.transform.position = CellToWorld(coord);
+            data.ContainedObject = newWall;
+        }
     }
 
     private void GenerateFood()
@@ -91,5 +113,11 @@ public class BoardManager : MonoBehaviour
     public Vector3 CellToWorld(Vector2Int cellIndex)
     {
         return m_Grid.GetCellCenterWorld((Vector3Int)cellIndex);
+    }
+
+    // SETTER - Sets a specific tile
+    public void SetCellTile(Vector2Int cellIndex, Tile tile)
+    {
+        m_Tilemap.SetTile(new Vector3Int(cellIndex.x, cellIndex.y, 0), tile);
     }
 }
