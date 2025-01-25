@@ -15,7 +15,7 @@ public class BoardManager : MonoBehaviour
     [SerializeField] Tile[] groundTiles;
     [SerializeField] Tile[] wallTiles;
     [SerializeField] FoodObject[] foodPrefabArray;
-    [SerializeField] WallObject wallPrefab;
+    [SerializeField] WallObject[] wallPrefabArray;
     [SerializeField] int minFood, maxFood;
     [SerializeField] int minWalls, maxWalls;
     [SerializeField] PlayerController player;
@@ -72,7 +72,7 @@ public class BoardManager : MonoBehaviour
             Vector2Int coord = m_EmptyCellsList[randomIndex];
 
             m_EmptyCellsList.RemoveAt(randomIndex);
-            WallObject newWall = Instantiate(wallPrefab);
+            WallObject newWall = Instantiate(wallPrefabArray[Random.Range(0, wallPrefabArray.Length)]);
             AddObject(newWall, coord);
         }
     }

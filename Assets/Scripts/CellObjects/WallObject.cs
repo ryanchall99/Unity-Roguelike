@@ -3,7 +3,8 @@ using UnityEngine.Tilemaps;
 
 public class WallObject : CellObject
 {
-    [SerializeField] Tile[] ObstacleTilesArray;
+    [SerializeField] Tile ObstacleTile;
+    [SerializeField] Tile DamagedTile;
     [SerializeField] int maxHealth;
 
     private int m_HealthPoints;
@@ -16,7 +17,7 @@ public class WallObject : CellObject
         m_HealthPoints = maxHealth;
         m_OriginalTile = GameManager.Instance.boardManager.GetCellTile(cell); // Caching original tile before change 
 
-        GameManager.Instance.boardManager.SetCellTile(cell, ObstacleTilesArray[Random.Range(0, ObstacleTilesArray.Length)]);
+        GameManager.Instance.boardManager.SetCellTile(cell, ObstacleTile);
     }
 
     public override bool PlayerWantsToEnter()
@@ -25,6 +26,10 @@ public class WallObject : CellObject
 
         if (m_HealthPoints > 0)
         {
+            if (m_HealthPoints == 1)
+            {
+                GameManager.Instance.boardManager.SetCellTile(m_Cell, DamagedTile);
+            }
             return false;
         }
 

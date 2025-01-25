@@ -44,14 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3e290242c7e3a74eb66388eec5bd90a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObstacleTilesArray:
-  - {fileID: 11400000, guid: c740a6b69a1968540bac6671b4de58f1, type: 2}
-  - {fileID: 11400000, guid: fb89c107d8cd9ae4f851c5668b3d2cbd, type: 2}
-  - {fileID: 11400000, guid: 63efa16663f85ee408293df4e6d836bd, type: 2}
-  - {fileID: 11400000, guid: a5ecb00ffe10aa643beea4e883f7f6b0, type: 2}
-  - {fileID: 11400000, guid: e3433fce2fbff804189385210b93604f, type: 2}
-  - {fileID: 11400000, guid: 1b1334765d1afc44693b55cd83546e43, type: 2}
-  - {fileID: 11400000, guid: 6ed41f0b3b72e4b4a996b3f4af4b7dd6, type: 2}
-  - {fileID: 11400000, guid: 5ec6b55973113f447b2728bab2f739e3, type: 2}
-  - {fileID: 11400000, guid: df8a0794c0427d34086a100f0c860748, type: 2}
+  ObstacleTile: {fileID: 11400000, guid: 1b1334765d1afc44693b55cd83546e43, type: 2}
   maxHealth: 3

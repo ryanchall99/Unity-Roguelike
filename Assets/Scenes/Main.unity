@@ -652,7 +652,10 @@ MonoBehaviour:
   foodPrefabArray:
   - {fileID: 4120196204741307048, guid: e899312b6d99f514e89b98996cf7cdbf, type: 3}
   - {fileID: 3477807011732607146, guid: e12d6bda46eff724aa835939d19a2037, type: 3}
-  wallPrefab: {fileID: 6092341974734017725, guid: 52ae4c181803d0f4a831a4a9d503b222, type: 3}
+  wallPrefabArray:
+  - {fileID: 6420104625851434671, guid: 46590882a2f756a41af5a8cb634f80da, type: 3}
+  - {fileID: 7751354573153288555, guid: 3513eb8a3a7ee1d4f99980fe8668d4b7, type: 3}
+  - {fileID: 5140497254020262466, guid: c5f29e1b647ba9c4fb7cb407c9a913ce, type: 3}
   minFood: 1
   maxFood: 5
   minWalls: 2
