@@ -38,12 +38,24 @@ public class GameManager : MonoBehaviour
         player.Spawn(boardManager, new Vector2Int(1, 1));
 
         m_FoodLabel = UIDoc.rootVisualElement.Q<Label>("FoodLabel");
-        m_FoodLabel.text = "Food : " + m_FoodCount;   
+        UpdateFoodLabel();
+    }
+
+    public void ChangeFood(int amount)
+    {
+        m_FoodCount += amount;
+        UpdateFoodLabel();
     }
 
     private void OnTurnHappen()
     {
-        m_FoodCount -= 1;
+        ChangeFood(-1);
+        UpdateFoodLabel();
+    }
+
+    private void UpdateFoodLabel()
+    {
         m_FoodLabel.text = "Food : " + m_FoodCount;
     }
+
 }
