@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1415157337}
+  m_FoodCount: 10
   UIDoc: {fileID: 202432293}
   boardManager: {fileID: 1972904733}
 --- !u!4 &194353972
