@@ -7,16 +7,17 @@ public class GameManager : MonoBehaviour
 
     [Header("Board & Player")]
     [SerializeField] PlayerController player;
-    [SerializeField] int m_FoodCount = 100;
+    [SerializeField] int maxFood = 10;
 
     [Header("UI")]
     [SerializeField] UIDocument UIDoc;
 
     private Label m_FoodLabel;
+    int m_FoodCount = 100;
     private VisualElement m_GameOverPanel;
     private Label m_GameOverMessage;
 
-    private int m_CurrentLevel = 1;
+    private int m_CurrentLevel = 0;
 
     public TurnManager turnManager { get; private set; }
     public BoardManager boardManager;
@@ -40,6 +41,8 @@ public class GameManager : MonoBehaviour
         NewLevel();
 
         m_FoodLabel = UIDoc.rootVisualElement.Q<Label>("FoodLabel");
+        m_FoodCount = maxFood;
+        
         m_GameOverPanel = UIDoc.rootVisualElement.Q<VisualElement>("GameOverPanel");
         m_GameOverMessage = m_GameOverPanel.Q<Label>("GameOverMessage"); // Child of m_GameOverPanel
 
@@ -49,11 +52,26 @@ public class GameManager : MonoBehaviour
 
     public void NewLevel()
     {
+        ResetBoard();
+        m_CurrentLevel++; // Increment level count by 1
+    }
+
+    public void StartNewGame()
+    {
+        m_GameOverPanel.style.visibility = Visibility.Hidden;
+
+        m_CurrentLevel = 1;
+        m_FoodCount = maxFood;
+        UpdateFoodLabel();
+        ResetBoard();
+        player.Init();
+    }
+
+    private void ResetBoard()
+    {
         boardManager.ClearBoard(); // Clear existing board
         boardManager.Init(); // Initialize new board
         player.Spawn(boardManager, new Vector2Int(1, 1)); // Spawn player at bottom left corner
-
-        m_CurrentLevel++; // Increment level count by 1
     }
 
     public void ChangeFood(int amount)
@@ -63,8 +81,9 @@ public class GameManager : MonoBehaviour
 
         if (m_FoodCount <= 0)
         {
-            m_GameOverPanel.style.visibility = Visibility.Visible;
-            m_GameOverMessage.text = "Game Over!\n\nYou traveled through " + m_CurrentLevel + " levels";
+            player.GameOver(); // Run Game Over method within player controller script
+            m_GameOverPanel.style.visibility = Visibility.Visible; // Set to visible
+            m_GameOverMessage.text = "Game Over!\n\nYou traveled through " + m_CurrentLevel + " levels"; // Update text
         }
     }
 

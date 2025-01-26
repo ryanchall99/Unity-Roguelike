@@ -6,9 +6,11 @@ public class PlayerController : MonoBehaviour
 {
     InputSystem_Actions inputActions;
     InputAction moveAction;
+    InputAction enterAction;
 
     private BoardManager m_Board;
     private Vector2Int m_CellPosition;
+    private bool m_IsGameOver = false;
 
     private void OnEnable() 
     {
@@ -27,10 +29,27 @@ public class PlayerController : MonoBehaviour
     private void Start() 
     {
         moveAction = inputActions.Player.Move;
+        enterAction = inputActions.Player.Enter;
+    }
+
+    public void Init()
+    {
+        m_IsGameOver = false;
+        inputActions.Player.Move.Enable();
     }
 
     private void Update() 
-    {
+    {   
+        if (m_IsGameOver)
+        {
+            if (enterAction.WasPressedThisFrame())
+            {
+                GameManager.Instance.StartNewGame();
+            }
+            
+            return;
+        }
+        
         HandleMovement();
     }
 
@@ -96,5 +115,11 @@ public class PlayerController : MonoBehaviour
     {
         m_Board = boardManager;
         MoveTo(cell);
+    }
+
+    public void GameOver()
+    {
+        m_IsGameOver = true;
+        inputActions.Player.Move.Disable();
     }
 }
