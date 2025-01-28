@@ -29,6 +29,7 @@ public class EnemyObject : CellObject
 
         if (m_CurrentHealth > 0)
         {
+            GameManager.Instance.GetPlayerController().Attack();
             return false;
         }
 
