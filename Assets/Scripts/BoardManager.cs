@@ -118,7 +118,7 @@ public class BoardManager : MonoBehaviour
 
         for (int y = 0; y < boardHeight; y++)
         {
-            for (int x = 0; x > boardWidth; x++)
+            for (int x = 0; x < boardWidth; x++)
             {
                 CellData cellData = m_BoardData[x, y];
 
@@ -127,6 +127,7 @@ public class BoardManager : MonoBehaviour
                     // Deleting Whole GameObject, as just deleting the cellData.ContainedObject, will only destroy the CellObject COMPONENT only.
                     Destroy(cellData.ContainedObject.gameObject);
                 }
+
                 // null removes the cell tile and leaves it empty.
                 SetCellTile(new Vector2Int(x, y), null);
             }
