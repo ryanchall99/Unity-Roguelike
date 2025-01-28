@@ -681,11 +681,15 @@ MonoBehaviour:
   - {fileID: 6420104625851434671, guid: 46590882a2f756a41af5a8cb634f80da, type: 3}
   - {fileID: 7751354573153288555, guid: 3513eb8a3a7ee1d4f99980fe8668d4b7, type: 3}
   - {fileID: 5140497254020262466, guid: c5f29e1b647ba9c4fb7cb407c9a913ce, type: 3}
+  enemyPrefabArray:
+  - {fileID: 7168532141166042629, guid: b54422e3ed4ff674bad70a04ba356767, type: 3}
   exitPrefab: {fileID: 7207362634799531838, guid: aed5c22d36e9fd4438a2bf166a103823, type: 3}
   minFood: 1
   maxFood: 5
   minWalls: 2
   maxWalls: 5
+  minEnemies: 1
+  maxEnemies: 2
   player: {fileID: 1415157337}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -16,9 +16,11 @@ public class BoardManager : MonoBehaviour
     [SerializeField] Tile[] wallTiles;
     [SerializeField] FoodObject[] foodPrefabArray;
     [SerializeField] WallObject[] wallPrefabArray;
+    [SerializeField] EnemyObject[] enemyPrefabArray;
     [SerializeField] ExitCellObject exitPrefab;
     [SerializeField] int minFood, maxFood;
     [SerializeField] int minWalls, maxWalls;
+    [SerializeField] int minEnemies, maxEnemies;
     [SerializeField] PlayerController player;
 
     private Tilemap m_Tilemap;
@@ -65,36 +67,24 @@ public class BoardManager : MonoBehaviour
         AddObject(Instantiate(exitPrefab), endCoord);
         m_EmptyCellsList.Remove(endCoord);
 
-        GenerateWalls();
-        GenerateFood();
+        GenerateObject(wallPrefabArray, minWalls, maxWalls);
+        GenerateObject(foodPrefabArray, minFood, maxFood);
+        GenerateObject(enemyPrefabArray, minEnemies, maxEnemies);
     }
 
-    private void GenerateWalls()
+    private void GenerateObject(CellObject[] objObjectArray, int min, int max)
     {
-        int wallCount = Random.Range(minWalls, maxWalls);
-        for (int i = 0; i < wallCount; i++)
-        {
-            int randomIndex = Random.Range(0, m_EmptyCellsList.Count);
-            Vector2Int coord = m_EmptyCellsList[randomIndex];
-
-            m_EmptyCellsList.RemoveAt(randomIndex);
-            WallObject newWall = Instantiate(wallPrefabArray[Random.Range(0, wallPrefabArray.Length)]);
-            AddObject(newWall, coord);
-        }
-    }
-
-    private void GenerateFood()
-    {
-        int foodCount = Random.Range(minFood, maxFood);
-        for (int i = 0; i < foodCount; i++)
+        // Choosing random count
+        int objCount = Random.Range(min, max);
+        for (int i = 0; i < objCount; i++)
         {
             // Choosing random index from empty cell list
             int randomIndex = Random.Range(0, m_EmptyCellsList.Count);
             Vector2Int coord = m_EmptyCellsList[randomIndex]; // Storing coord of cell chosen
 
             m_EmptyCellsList.RemoveAt(randomIndex); // Removing chosen coordinate from list (Prevents being chosen again)
-            FoodObject newFood = Instantiate(foodPrefabArray[Random.Range(0, foodPrefabArray.Length)]); // Instantiate food prefab
-            AddObject(newFood, coord);
+            CellObject newObj = Instantiate(objObjectArray[Random.Range(0, objObjectArray.Length)]); // Instantiate objects prefab
+            AddObject(newObj, coord);
         }
     }
 
