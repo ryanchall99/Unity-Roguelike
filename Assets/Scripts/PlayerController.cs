@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using Mono.Cecil.Cil;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -152,6 +153,11 @@ public class PlayerController : MonoBehaviour
     {
         m_Board = boardManager;
         MoveTo(cell, true);
+    }
+
+    public Vector2Int GetCurrentCell()
+    {
+        return m_CellPosition;
     }
 
     public void GameOver()
