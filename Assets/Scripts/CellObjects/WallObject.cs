@@ -30,6 +30,9 @@ public class WallObject : CellObject
             {
                 GameManager.Instance.boardManager.SetCellTile(m_Cell, DamagedTile);
             }
+            
+            GameManager.Instance.GetPlayerController().Attack();
+
             return false;
         }
 

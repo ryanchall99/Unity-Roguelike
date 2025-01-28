@@ -8,9 +8,21 @@ public class PlayerController : MonoBehaviour
     InputAction moveAction;
     InputAction enterAction;
 
+    [SerializeField] float movementSpeed;
+
     private BoardManager m_Board;
     private Vector2Int m_CellPosition;
+    private Vector3 m_MoveTarget;
     private bool m_IsGameOver = false;
+    private bool m_IsMoving;
+
+    // Animation
+    private Animator m_Animator;
+
+    private void Awake() 
+    {
+        m_Animator = GetComponent<Animator>();    
+    }
 
     private void OnEnable() 
     {
@@ -35,6 +47,7 @@ public class PlayerController : MonoBehaviour
     public void Init()
     {
         m_IsGameOver = false;
+        m_IsMoving = false;
         inputActions.Player.Move.Enable();
     }
 
@@ -48,6 +61,22 @@ public class PlayerController : MonoBehaviour
             }
             
             return;
+        }
+
+        if (m_IsMoving)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, m_MoveTarget, movementSpeed * Time.deltaTime);
+            if (transform.position == m_MoveTarget)
+            {
+                m_IsMoving = false;
+                var cellData = m_Board.GetCellData(m_CellPosition);
+                if (cellData.ContainedObject != null)
+                {
+                    cellData.ContainedObject.PlayerEntered();
+                }
+            }
+
+            return; // Early return to stop movement before reaching tile
         }
         
         HandleMovement();
@@ -92,34 +121,47 @@ public class PlayerController : MonoBehaviour
                 
                 if (cellData.ContainedObject == null)
                 {
-                    MoveTo(newCellTarget);    
+                    MoveTo(newCellTarget, false);    
                 }
                 else if (cellData.ContainedObject.PlayerWantsToEnter())
                 {
-                    MoveTo(newCellTarget);
-                    cellData.ContainedObject.PlayerEntered();
+                    MoveTo(newCellTarget, false);
                 }
             }
         }
 
     }
 
-    public void MoveTo(Vector2Int cell)
+    public void MoveTo(Vector2Int cell, bool immediate)
     {
         m_CellPosition = cell;
-        // Move Player to right world position
-        transform.position = m_Board.CellToWorld(m_CellPosition);
+
+        if (immediate)
+        {
+            m_IsMoving = false;
+            transform.position = m_Board.CellToWorld(m_CellPosition);
+        }
+        else
+        {
+            m_IsMoving = true;
+            m_MoveTarget = m_Board.CellToWorld(m_CellPosition);
+        }
     }
 
     public void Spawn(BoardManager boardManager, Vector2Int cell)
     {
         m_Board = boardManager;
-        MoveTo(cell);
+        MoveTo(cell, true);
     }
 
     public void GameOver()
     {
         m_IsGameOver = true;
         inputActions.Player.Move.Disable();
+    }
+
+    public void Attack()
+    {
+        m_Animator.SetTrigger(AnimatorNames.Attack);
     }
 }

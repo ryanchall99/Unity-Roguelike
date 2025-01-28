@@ -98,4 +98,9 @@ public class GameManager : MonoBehaviour
         m_FoodLabel.text = "Food : " + m_FoodCount;
     }
 
+    public PlayerController GetPlayerController()
+    {
+        return player;
+    }
+
 }
