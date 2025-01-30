@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
         {
             player.GameOver(); // Run Game Over method within player controller script
             m_GameOverPanel.style.visibility = Visibility.Visible; // Set to visible
-            m_GameOverMessage.text = "Game Over!\n\nYou traveled through " + m_CurrentLevel + " levels"; // Update text
+            m_GameOverMessage.text = "Game Over!\n\nYou traveled through " + m_CurrentLevel + " levels" + "\n\nPress ENTER to restart..."; // Update text
         }
     }
 
