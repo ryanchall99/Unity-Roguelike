@@ -405,7 +405,7 @@ MonoBehaviour:
   - name: Theme
     clip: {fileID: 8300000, guid: 2d75080d0851d4613ada1117d91ee417, type: 3}
   sfxSounds:
-  - name: Chop
+  - name: Attack
     clip: {fileID: 8300000, guid: 4c2332bc8245b474dad63074059bb755, type: 3}
   - name: Fruit
     clip: {fileID: 8300000, guid: 1cb61f83d60374c7389bb547431919e3, type: 3}
@@ -819,7 +819,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.05
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -169,5 +169,6 @@ public class PlayerController : MonoBehaviour
     public void Attack()
     {
         m_Animator.SetTrigger(AnimatorNames.Attack);
+        AudioManager.Instance.PlaySFX("Attack");
     }
 }
