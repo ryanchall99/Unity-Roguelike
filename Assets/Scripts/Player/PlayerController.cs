@@ -128,6 +128,8 @@ public class PlayerController : MonoBehaviour
                 {
                     MoveTo(newCellTarget, false);
                 }
+
+                AudioManager.Instance.PlaySFX("Walk");
             }
         }
 
