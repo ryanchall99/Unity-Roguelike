@@ -6,6 +6,7 @@ public class EnemyObject : CellObject
     [SerializeField] int damage = 3;
     
     private int m_CurrentHealth;
+    private Animator m_Animator;
 
     private void Awake() 
     {
@@ -15,6 +16,11 @@ public class EnemyObject : CellObject
     private void OnDestroy() 
     {
         GameManager.Instance.turnManager.OnTick -= OnTurnHappen;    
+    }
+
+    private void Start() 
+    {
+        m_Animator = GetComponent<Animator>();    
     }
 
     public override void Init(Vector2Int cell)
@@ -74,6 +80,7 @@ public class EnemyObject : CellObject
         {
             // Player is adjacent to enemy
             GameManager.Instance.ChangeFood(-damage);
+            m_Animator.SetTrigger(AnimatorNames.Attack);
         }
         else
         {
