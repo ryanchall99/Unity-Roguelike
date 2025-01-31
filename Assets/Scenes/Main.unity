@@ -1001,6 +1001,7 @@ MonoBehaviour:
   - {fileID: 5140497254020262466, guid: c5f29e1b647ba9c4fb7cb407c9a913ce, type: 3}
   enemyPrefabArray:
   - {fileID: 7168532141166042629, guid: b54422e3ed4ff674bad70a04ba356767, type: 3}
+  - {fileID: 6283524503105249520, guid: 8a2dcf8d4386aa44f90e457282bb7683, type: 3}
   exitPrefab: {fileID: 7207362634799531838, guid: aed5c22d36e9fd4438a2bf166a103823, type: 3}
   minFood: 1
   maxFood: 5
